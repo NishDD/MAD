@@ -7,6 +7,9 @@ dependencies:
 
 ////////////////////////////////////////
 
+in terminal : flutter pub get
+
+///////////////////////
 
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -61,38 +64,28 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Container(
-          constraints: BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bgimg.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(40),
-            child: SfCircularChart(
-              title: ChartTitle(
-                text: 'Sales by the Laptop (year 2021)',
-                alignment: ChartAlignment.near,
-                textStyle: const TextStyle(
-                  fontFamily: 'times new roman',
-                  fontSize: 20,
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
+          padding: const EdgeInsets.all(40),
+          child: SfCircularChart(
+            title: ChartTitle(
+              text: 'Sales by the Laptop (year 2021)',
+              alignment: ChartAlignment.near,
+              textStyle: const TextStyle(
+                fontFamily: 'times new roman',
+                fontSize: 20,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
               ),
-              tooltipBehavior: _tooltipBehavior,
-              series: <CircularSeries>[
-                PieSeries<ChartData, String>(
-                  enableTooltip: true,
-                  dataSource: chartData,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y,
-                  dataLabelSettings:
-                  const DataLabelSettings(isVisible: true),
-                ),
-              ],
             ),
+            tooltipBehavior: _tooltipBehavior,
+            series: <CircularSeries>[
+              PieSeries<ChartData, String>(
+                enableTooltip: true,
+                dataSource: chartData,
+                xValueMapper: (ChartData data, _) => data.x,
+                yValueMapper: (ChartData data, _) => data.y,
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+              ),
+            ],
           ),
         ),
       ),
