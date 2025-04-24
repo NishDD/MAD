@@ -1,0 +1,108 @@
+in pubspec.yaml->
+
+dependencies:
+  syncfusion_flutter_charts: ^29.1.39
+  syncfusion_flutter_core: ^29.1.39
+
+
+////////////////////////////////////////
+
+
+import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Syncfusion Pie Chart Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  TooltipBehavior? _tooltipBehavior;
+
+  @override
+  void initState() {
+    _tooltipBehavior = TooltipBehavior(enable: true);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<ChartData> chartData = [
+      ChartData('Lenovo', 25),
+      ChartData('Asus', 38),
+      ChartData('Dell', 48),
+      ChartData('HP', 50),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(Icons.pie_chart, color: Colors.white),
+        title: const Text('Flutter Experiment No 5'),
+      ),
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints.expand(),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/bgimg.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(40),
+            child: SfCircularChart(
+              title: ChartTitle(
+                text: 'Sales by the Laptop (year 2021)',
+                alignment: ChartAlignment.near,
+                textStyle: const TextStyle(
+                  fontFamily: 'times new roman',
+                  fontSize: 20,
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              tooltipBehavior: _tooltipBehavior,
+              series: <CircularSeries>[
+                PieSeries<ChartData, String>(
+                  enableTooltip: true,
+                  dataSource: chartData,
+                  xValueMapper: (ChartData data, _) => data.x,
+                  yValueMapper: (ChartData data, _) => data.y,
+                  dataLabelSettings:
+                  const DataLabelSettings(isVisible: true),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ChartData {
+  ChartData(this.x, this.y, [this.color]);
+  final String x;
+  final double y;
+  final Color? color;
+}
