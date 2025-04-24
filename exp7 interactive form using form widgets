@@ -1,0 +1,89 @@
+in pubspec.yaml :
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  form_field_validator: ^1.1.0
+
+
+
+////////////
+
+on terminal: flutter pub get
+/////////////
+
+
+import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+
+void main() => runApp(const MaterialApp(home: HomePage()));
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  void validate() {
+    if (formKey.currentState!.validate()) {
+      print("Ok");
+    } else {
+      print("Error");
+    }
+  }
+
+  String? emailvalidate(value) {
+    if (value!.isEmpty) {
+      return "Required";
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("LoginPage"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Form(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Email",
+                  border: OutlineInputBorder(),
+                ),
+                validator: emailvalidate,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 15.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 25.0),
+                child: ElevatedButton(
+                  onPressed: validate,
+                  child: const Text("Login"),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
